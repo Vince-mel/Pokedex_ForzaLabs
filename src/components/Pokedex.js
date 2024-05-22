@@ -124,7 +124,7 @@ const Pokedex = () => {
           newPokemonData[index + 1] = {
             id: index + 1,
             name: pokemon.name,
-            sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+            sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
               index + 1
             }.png`,
           };
