@@ -149,7 +149,7 @@ const Pokedex = () => {
           <CardContent className={classes.cardContent}>
             <Typography
               className={classes.pokemonName}
-            >{`${id}. ${toFirstCharuppercase(name)}`}</Typography>
+            >{`${toFirstCharuppercase(name)}`}</Typography>
           </CardContent>
         </Card>
       </Grid>
