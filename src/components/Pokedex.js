@@ -23,6 +23,10 @@ import Logo from "../assets/img/Logo2.png";
 import Logo2 from "../assets/img/logo.png";
 
 const theme = createMuiTheme({
+  pageContent: {
+    margin: "auto",
+    maxWidth: "30%", // Imposta una larghezza massima per tutto il contenuto della pagina
+  },
   palette: {
     primary: {
       main: "#212121",
@@ -47,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f5f5f5",
     transition: "0.3s",
     "&:hover": {
-      transform: "scale(1.03)",
+      transform: "scale(1.30)",
     },
   },
   pokemonName: {
@@ -58,9 +62,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   pokedexContainer: {
-    paddingTop: theme.spacing(2),
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(6),
+    paddingTop: theme.spacing(5),
+    margin: "auto",
+    maxWidth: "80%",
   },
   cardMedia: {
     margin: "auto",
@@ -136,7 +140,7 @@ const Pokedex = () => {
   const getPokemonCard = (pokemonId) => {
     const { id, name, sprite } = pokemonData[pokemonId];
     return (
-      <Grid item xs={12} sm={4} key={pokemonId}>
+      <Grid item xs={12} sm={4} key={pokemonId} className={classes.gridItem}>
         <Card
           onClick={() => navigate(`/${pokemonId}`)}
           className={classes.pokemonCard}
@@ -159,43 +163,50 @@ const Pokedex = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static">
-        <Toolbar>
-          <Box className={classes.searchContainer}>
-            <img src={Logo} alt="Logo" className={classes.logo} />
-            <img src={Logo2} alt="Logo2" className={classes.logo2} />
+      <div className={classes.pageContent}>
+        <AppBar position="static">
+          <Toolbar>
+            <Box className={classes.searchContainer}>
+              <img src={Logo} alt="Logo" className={classes.logo} />
+              <img src={Logo2} alt="Logo2" className={classes.logo2} />
 
-            <Box display="flex" alignItems="center">
-              <SearchIcon className={classes.searchIcon} />
-              <TextField
-                className={classes.searchInput}
-                onChange={handleSearchChange}
-                label="Search Pokemon"
-                variant="standard"
-                InputProps={{
-                  style: { color: "#ffffff" },
-                }}
-                InputLabelProps={{
-                  style: { color: "#ffffff" },
-                }}
-              />
+              <Box display="flex" alignItems="center">
+                <SearchIcon className={classes.searchIcon} />
+                <TextField
+                  className={classes.searchInput}
+                  onChange={handleSearchChange}
+                  label="Search Pokemon"
+                  variant="standard"
+                  InputProps={{
+                    style: { color: "#ffffff" },
+                  }}
+                  InputLabelProps={{
+                    style: { color: "#ffffff" },
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {pokemonData ? (
-        <Grid container spacing={2} className={classes.pokedexContainer}>
-          {Object.keys(pokemonData).map((pokemonId) => {
-            const pokemonName = pokemonData[pokemonId].name.toLowerCase();
-            if (pokemonName.includes(filter)) {
-              return getPokemonCard(pokemonId);
-            }
-            return null;
-          })}
-        </Grid>
-      ) : (
-        <CircularProgress />
-      )}
+          </Toolbar>
+        </AppBar>
+        {pokemonData ? (
+          <Grid
+            container
+            spacing={10}
+            className={classes.pokedexContainer}
+            justifyContent="center"
+          >
+            {Object.keys(pokemonData).map((pokemonId) => {
+              const pokemonName = pokemonData[pokemonId].name.toLowerCase();
+              if (pokemonName.includes(filter)) {
+                return getPokemonCard(pokemonId);
+              }
+              return null;
+            })}
+          </Grid>
+        ) : (
+          <CircularProgress />
+        )}
+      </div>
     </ThemeProvider>
   );
 };
