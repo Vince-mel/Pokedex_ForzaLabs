@@ -7,7 +7,7 @@ import {
   LinearProgress,
   withStyles,
 } from "@material-ui/core";
-import { toFirstCharuppercase } from "./constants";
+import { toFirstCharUppercase } from "./constants";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -50,7 +50,7 @@ const Pokemon = () => {
     return (
       <>
         <Typography variant="h1">
-          #{id} {toFirstCharuppercase(name)}
+          #{id} {toFirstCharUppercase(name)}
           <img src={front_default} alt="Sprite" />
         </Typography>
         <img

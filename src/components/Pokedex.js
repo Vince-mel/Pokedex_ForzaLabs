@@ -1,117 +1,25 @@
 import React, { useState, useEffect } from "react";
 import {
-  AppBar,
-  Toolbar,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  CircularProgress,
-  TextField,
+  Paper,
+  Text,
   Box,
-  createMuiTheme,
-  ThemeProvider,
-  CssBaseline,
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import { makeStyles } from "@material-ui/core/styles";
-import { toFirstCharuppercase } from "./constants";
-import axios from "axios";
+  TextInput,
+  Container,
+  Loader,
+  useMantineTheme,
+  Divider,
+} from "@mantine/core";
+import { Search } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Logo from "../assets/img/Logo2.png";
 import Logo2 from "../assets/img/logo.png";
 
-const theme = createMuiTheme({
-  pageContent: {
-    margin: "auto",
-    maxWidth: "30%", // Imposta una larghezza massima per tutto il contenuto della pagina
-  },
-  palette: {
-    primary: {
-      main: "#212121",
-    },
-    background: {
-      default: "#212121",
-    },
-  },
-});
-
-const useStyles = makeStyles((theme) => ({
-  pokemonCard: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    borderRadius: "15px",
-    minWidth: "300px",
-    minHeight: "450px",
-    maxHeight: "400px",
-    maxWidth: "200px",
-    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-    backgroundColor: "#f5f5f5",
-    transition: "0.3s",
-    "&:hover": {
-      transform: "scale(1.30)",
-    },
-  },
-  pokemonName: {
-    fontSize: "1.8rem",
-    fontFamily: "Press Start 2P",
-    color: "#00000",
-    fontWeight: "bold",
-  },
-
-  pokedexContainer: {
-    paddingTop: theme.spacing(5),
-    margin: "auto",
-    maxWidth: "80%",
-  },
-  cardMedia: {
-    margin: "auto",
-  },
-  cardContent: {
-    textAlign: "center",
-    alignContent: "center",
-  },
-  logo: {
-    display: "block",
-    maxWidth: "200px",
-    maxHeight: "200px",
-    margin: "auto",
-    marginBottom: "-35px",
-  },
-  logo2: {
-    display: "block",
-    maxWidth: "120px",
-    maxHeight: "120px",
-    marginBottom: "60px",
-  },
-  searchContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    width: "60%",
-    margin: "auto",
-  },
-  searchIcon: {
-    alignSelf: "flex-end",
-    marginBottom: theme.spacing(1),
-  },
-  searchInput: {
-    width: "100%",
-    margin: theme.spacing(1),
-  },
-}));
-
 const Pokedex = () => {
-  const classes = useStyles();
+  const theme = useMantineTheme();
   const [pokemonData, setPokemonData] = useState({});
-  const navigate = useNavigate();
   const [filter, setFilter] = useState("");
+  const navigate = useNavigate();
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value.toLowerCase());
@@ -137,77 +45,165 @@ const Pokedex = () => {
       });
   }, []);
 
-  const getPokemonCard = (pokemonId) => {
-    const { id, name, sprite } = pokemonData[pokemonId];
-    return (
-      <Grid item xs={12} sm={4} key={pokemonId} className={classes.gridItem}>
-        <Card
-          onClick={() => navigate(`/${pokemonId}`)}
-          className={classes.pokemonCard}
-        >
-          <CardMedia
-            className={classes.cardMedia}
-            image={sprite}
-            style={{ width: "200px", height: "200px" }}
-          />
-          <CardContent className={classes.cardContent}>
-            <Typography
-              className={classes.pokemonName}
-            >{`${toFirstCharuppercase(name)}`}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-    );
+  const formatPokemonName = (name) => {
+    return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className={classes.pageContent}>
-        <AppBar position="static">
-          <Toolbar>
-            <Box className={classes.searchContainer}>
-              <img src={Logo} alt="Logo" className={classes.logo} />
-              <img src={Logo2} alt="Logo2" className={classes.logo2} />
+  // ...
 
-              <Box display="flex" alignItems="center">
-                <SearchIcon className={classes.searchIcon} />
-                <TextField
-                  className={classes.searchInput}
-                  onChange={handleSearchChange}
-                  label="Search Pokemon"
-                  variant="standard"
-                  InputProps={{
-                    style: { color: "#ffffff" },
-                  }}
-                  InputLabelProps={{
-                    style: { color: "#ffffff" },
-                  }}
-                />
-              </Box>
-            </Box>
-          </Toolbar>
-        </AppBar>
-        {pokemonData ? (
-          <Grid
-            container
-            spacing={10}
-            className={classes.pokedexContainer}
-            justifyContent="center"
+  return (
+    <div
+      style={{
+        backgroundColor: theme.colors.dark[7],
+        minHeight: "100vh",
+        padding: "20px",
+      }}
+    >
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <img
+          src={Logo}
+          alt="Logo"
+          style={{ maxWidth: "200px", maxHeight: "200px", marginRight: "20px" }}
+        />
+        <img
+          src={Logo2}
+          alt="Logo2"
+          style={{ maxWidth: "120px", maxHeight: "120px" }}
+        />
+      </Box>
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <TextInput
+          placeholder="Search Pokemon"
+          icon={<Search />}
+          value={filter}
+          onChange={handleSearchChange}
+          style={{ width: "300px" }}
+        />
+      </Box>
+      <Container
+        style={{
+          maxWidth: "900px",
+          margin: "0 auto",
+        }}
+      >
+        {Object.keys(pokemonData).length > 0 ? (
+          <Box
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
           >
             {Object.keys(pokemonData).map((pokemonId) => {
-              const pokemonName = pokemonData[pokemonId].name.toLowerCase();
+              const pokemon = pokemonData[pokemonId];
+              const pokemonName = pokemon.name.toLowerCase();
               if (pokemonName.includes(filter)) {
-                return getPokemonCard(pokemonId);
+                return (
+                  <Box
+                    key={pokemonId}
+                    style={{
+                      width: "280px",
+                      margin: "10px",
+                      borderRadius: "10px",
+                      overflow: "hidden",
+                      transition: "transform 0.3s",
+                      boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
+                      borderColor: "white",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "scale(1.20)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "scale(1)";
+                    }}
+                  >
+                    <Paper
+                      style={{
+                        borderRadius: "10px",
+                        backgroundColor: "black",
+                        position: "relative",
+                        overflow: "hidden",
+                      }}
+                      onClick={() => navigate(`/${pokemonId}`)}
+                      clickable
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "200px",
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "180px",
+                            height: "180px",
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            overflow: "hidden",
+                            borderRadius: "50%",
+                            boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
+                            transition: "transform 0.3s",
+                          }}
+                        >
+                          <img
+                            src={pokemon.sprite}
+                            alt={pokemon.name}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                              borderRadius: "50%",
+                              position: "absolute",
+                              top: "0",
+                              left: "0",
+                              transition: "transform 0.3s",
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <Divider style={{ margin: "20px 0" }} />
+                      <Text
+                        style={{
+                          fontSize: "1.2rem",
+                          fontWeight: "bold",
+                          marginBottom: "10px",
+                          textAlign: "center",
+                          color: "white",
+                        }}
+                      >
+                        {formatPokemonName(pokemon.name)}
+                      </Text>
+                    </Paper>
+                  </Box>
+                );
               }
               return null;
             })}
-          </Grid>
+          </Box>
         ) : (
-          <CircularProgress />
+          <Loader style={{ marginTop: "20px" }} />
         )}
-      </div>
-    </ThemeProvider>
+      </Container>
+    </div>
   );
 };
 
