@@ -4,12 +4,14 @@ import {
   Loader,
   Button,
   Badge,
-  Progress,
   Group,
   Image,
-  Container,
   Center,
+  Stack,
+  Paper,
+  Divider,
 } from "@mantine/core";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import { toFirstCharUppercase } from "./constants";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -30,80 +32,121 @@ const Pokemon = () => {
         setPokemon(false);
       });
   }, [pokemonId]);
+
   const generatePokemonJSX = () => {
     if (!pokemon) {
-      return <Loader color="white" />;
+      return <Loader color="black" />;
     }
 
     const { name, id, height, weight, types, sprites, stats } = pokemon;
-    const fullImageUrl = `https://img.pokemondb.net/sprites/home/normal/${name}.png`;
+    const fullImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
     const { front_default } = sprites;
 
     return (
       <Center style={{ flexDirection: "column" }}>
-        <Group position="apart" align="center" mx="md">
-          <Text size="xl" weight={700} style={{ color: "white" }}>
-            #{id} {toFirstCharUppercase(name)}
+        <Paper
+          shadow="md"
+          p="md"
+          withBorder
+          style={{
+            width: "350px",
+            height: "450px",
+            backgroundColor: "#ffffff",
+            borderRadius: "10px",
+          }}
+        >
+          <Group position="apart" align="center">
+            <Text size="xl" weight={700} style={{ color: "black" }}>
+              #{id} {toFirstCharUppercase(name)}
+            </Text>
+            <Image src={front_default} alt="Sprite" width={50} height={50} />
+          </Group>
+          <Image
+            src={fullImageUrl}
+            alt="pokemon"
+            width={200}
+            height={200}
+            mx="auto"
+            my="md"
+          />
+          <Text
+            size="lg"
+            weight={700}
+            style={{ color: "black", textDecoration: "underline" }}
+            mb="xs"
+          >
+            Pokemon Info
           </Text>
-          <Image src={front_default} alt="Sprite" width={50} height={50} />
-        </Group>
-        <Image
-          src={fullImageUrl}
-          alt="pokemon"
-          width={300}
-          height={300}
-          mx="auto"
-          mb="md"
-        />
-        <Text size="lg" weight={700} style={{ color: "white" }} mx="md">
-          Pokemon Info
-        </Text>
-        <Text style={{ color: "white" }} mx="md">
-          Height: <Badge color="gray">{height}</Badge>
-        </Text>
-        <Text style={{ color: "white" }} mx="md">
-          Weight: <Badge color="gray">{weight}</Badge>
-        </Text>
-        <Text size="md" weight={700} style={{ color: "white" }} mx="md">
-          Types:
-        </Text>
-        <Group spacing="xs" mx="md">
-          {types.map((typeInfo) => {
-            const { type } = typeInfo;
-            const { name } = type;
-            return (
-              <Badge key={name} color="gray">
-                {name}
-              </Badge>
-            );
-          })}
-        </Group>
-        <Text size="md" weight={700} style={{ color: "white" }} mx="md">
-          Stats:
-        </Text>
-        <Group direction="column" spacing="xs" mx="md">
-          {stats.map((statInfo) => {
-            const { base_stat, stat } = statInfo;
-            const { name } = stat;
-            return (
-              <Group key={name} position="apart" align="center">
-                <Text style={{ color: "white" }}>{name}:</Text>
-                <Text style={{ color: "white" }}>{base_stat}</Text>
-                <Progress
-                  value={base_stat}
-                  size="xl"
-                  radius="xs"
-                  styles={{
-                    bar: { backgroundColor: "yellow" },
-                    root: { backgroundColor: "black" },
-                  }}
-                />
-              </Group>
-            );
-          })}
-        </Group>
-        {pokemon !== undefined && (
+          <Group position="apart" spacing="xs">
+            <Text style={{ color: "black" }}>Height:</Text>
+            <Badge color="gray">{height}</Badge>
+          </Group>
+          <Group position="apart" spacing="xs">
+            <Text style={{ color: "black" }}>Weight:</Text>
+            <Badge color="gray">{weight}</Badge>
+          </Group>
+          <Divider my="sm" />
+          <Text
+            size="md"
+            weight={700}
+            style={{ color: "black", textDecoration: "underline" }}
+            mb="xs"
+          >
+            Types:
+          </Text>
+          <Group spacing="xs">
+            {types.map((typeInfo) => {
+              const { type } = typeInfo;
+              const { name } = type;
+              return (
+                <Badge key={name} color="gray">
+                  {name}
+                </Badge>
+              );
+            })}
+          </Group>
+          <Divider my="sm" />
+          <Text
+            size="md"
+            weight={700}
+            style={{ color: "black", textDecoration: "underline" }}
+            mb="xs"
+          >
+            Stats:
+          </Text>
+          <Stack spacing="xs">
+            {stats.map((statInfo) => {
+              const { base_stat, stat } = statInfo;
+              const { name } = stat;
+              const normalizedBaseStat = Math.min(100, base_stat);
+              return (
+                <Group
+                  key={name}
+                  position="apart"
+                  align="center"
+                  style={{ width: "100%" }}
+                >
+                  <Text style={{ color: "black", width: "100px" }}>
+                    {name}:
+                  </Text>
+                  <Text style={{ color: "black", width: "50px" }}>
+                    {base_stat}
+                  </Text>
+                  <LinearProgress
+                    style={{
+                      width: "100px",
+                      height: "10px",
+                      borderRadius: "5px",
+                    }}
+                    variant="determinate"
+                    value={normalizedBaseStat}
+                  />
+                </Group>
+              );
+            })}
+          </Stack>
           <Button
+            fullWidth
             mt="md"
             onClick={() => navigate("/")}
             styles={{
@@ -111,14 +154,12 @@ const Pokemon = () => {
                 backgroundColor: "#1a90ff",
                 border: 0,
                 height: 42,
-                paddingLeft: 20,
-                paddingRight: 20,
               },
             }}
           >
             Go Back
           </Button>
-        )}
+        </Paper>
       </Center>
     );
   };
@@ -127,28 +168,13 @@ const Pokemon = () => {
     <Center
       style={{
         height: "100vh",
-        backgroundColor: "black",
+        backgroundColor: "#f0f0f0",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Container
-        px={0}
-        my="xl"
-        style={{
-          backgroundColor: "black",
-          padding: "2rem",
-          borderRadius: "10px",
-          boxShadow: "0 0 10px rgba(255, 255, 255, 0.5)",
-          border: "2px solid white",
-          width: "100%",
-          maxWidth: "800px",
-          margin: "0 auto",
-        }}
-      >
-        {generatePokemonJSX()}
-      </Container>
+      {generatePokemonJSX()}
     </Center>
   );
 };
