@@ -11,6 +11,7 @@ import {
   Container,
   Grid,
   Flex,
+  Col,
   Box,
 } from "@mantine/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -57,11 +58,10 @@ const Pokemon = () => {
     const fullImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
     const { front_default } = sprites;
 
-    // Ottieni il colore del tipo principale del Pokémon
+    // Get the color of the main type of the Pokémon
     const mainTypeColor = typeColors[types[0].type.name];
-
     return (
-      <Container MaxWidth="300px" MaxHeight="300px">
+      <Container maxWidth="300px" maxHeight="300px">
         <Center
           style={{
             flexDirection: "column",
@@ -74,7 +74,7 @@ const Pokemon = () => {
             padding="md"
             style={{
               margin: "auto",
-              height: "70%",
+              height: "10%",
               width: "50%",
               backgroundColor: "#ffffff",
               borderRadius: "10px",
@@ -87,14 +87,14 @@ const Pokemon = () => {
               direction="column"
               justify="center"
               style={{ padding: "1em" }}
-              text-align="center"
+              textAlign="center"
             >
               <Group
                 position="center"
                 align="center"
                 display="flex"
-                align-items="center"
-                justify="center"
+                alignItems="center"
+                justifyContent="center"
                 margin="auto"
               >
                 <Text
@@ -103,8 +103,9 @@ const Pokemon = () => {
                   style={{
                     color: mainTypeColor,
                     textAlign: "center",
-                    fontSize: "2em",
-                    fontFamily: "Comic Sans MS",
+                    fontSize: "2.5em",
+                    fontFamily: "Arial Black",
+                    textTransform: "capitalize",
                   }}
                 >
                   #{id} {toFirstCharUppercase(name)}
@@ -112,119 +113,188 @@ const Pokemon = () => {
                 <Image
                   src={front_default}
                   alt="Sprite"
-                  width={80}
-                  height={80}
+                  width={110}
+                  height={110}
                 />
               </Group>
               <Image
                 src={fullImageUrl}
                 alt="pokemon"
-                width={200}
-                height={200}
+                width={300}
+                height={300}
                 mx="auto"
                 my="md"
                 style={{ objectFit: "cover", objectPosition: "center" }}
               />
-              <Text
-                size="lg"
-                weight={700}
-                style={{ color: "black", textDecoration: "underline" }}
-                mb="xs"
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: "20px",
+                }}
               >
-                Pokemon Info
-              </Text>
-              <Grid gutter="xl" cols={2}>
-                <Grid.Col>
-                  <Group position="center" spacing="xs">
-                    <Text style={{ color: "black" }}>Height:</Text>
-                    <Badge color="gray">{height}</Badge>
-                  </Group>
-                  <Group position="center" spacing="xs">
-                    <Text style={{ color: "black" }}>Weight:</Text>
-                    <Badge color="gray">{weight}</Badge>
-                  </Group>
-                </Grid.Col>
-                <Grid.Col>
-                  <Text
-                    size="md"
-                    weight={700}
-                    style={{ color: "black", textDecoration: "underline" }}
-                    mb="xs"
-                  >
-                    Types:
-                  </Text>
-                  <Group spacing="xs" position="center">
-                    {types.map((typeInfo) => {
-                      const { type } = typeInfo;
-                      const { name } = type;
-                      return (
-                        <Badge
-                          key={name}
-                          style={{
-                            color: typeColors[name] || "gray",
-                            fontSize: "1em",
-                            textTransform: "uppercase",
-                            fontFamily: "Comic Sans MS",
-                          }}
-                        >
-                          {name}
-                        </Badge>
-                      );
-                    })}
-                  </Group>
-                </Grid.Col>
-              </Grid>
+                <Text
+                  size="lg"
+                  weight={700}
+                  style={{
+                    color: "black",
+                    textDecoration: "underline",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Pokemon Info
+                </Text>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <div style={{ flex: "0 0 45%", marginBottom: "20px" }}>
+                    <Group position="center" spacing="xs">
+                      <Text
+                        style={{
+                          color: "black",
+                          fontSize: "1.2em",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        Height:
+                      </Text>
+                      <Badge color="gray">{height}</Badge>
+                    </Group>
+                    <Group position="center" spacing="xs">
+                      <Text
+                        style={{
+                          color: "black",
+                          fontSize: "1.2em",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        Weight:
+                      </Text>
+                      <Badge color="gray">{weight}</Badge>
+                    </Group>
+                  </div>
+                  <div style={{ flex: "0 0 45%", marginBottom: "20px" }}>
+                    <Text
+                      size="md"
+                      weight={700}
+                      style={{
+                        color: "black",
+                        textDecoration: "underline",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      Types:
+                    </Text>
+                    <Group spacing="xs" position="center">
+                      {types.map((typeInfo) => {
+                        const { type } = typeInfo;
+                        const { name } = type;
+                        return (
+                          <Badge
+                            key={name}
+                            style={{
+                              color: typeColors[name] || "gray",
+                              fontSize: "1em",
+                              textTransform: "capitalize",
+                              fontFamily: "Comic Sans MS",
+                            }}
+                          >
+                            {name}
+                          </Badge>
+                        );
+                      })}
+                    </Group>
+                  </div>
+                </div>
+              </div>
 
-              <Divider my="sm" />
+              <Divider my="xl" />
 
               <Text
                 size="md"
                 weight={700}
-                style={{ color: "black", textDecoration: "underline" }}
+                style={{
+                  color: "black",
+                  textDecoration: "underline",
+                  textTransform: "capitalize",
+                }}
                 mb="xs"
               >
                 Stats:
               </Text>
-
-              <Grid gutter="xs" cols={2}>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "space-between",
+                }}
+              >
                 {stats.map((statInfo) => {
                   const { base_stat, stat } = statInfo;
                   const { name } = stat;
                   const normalizedBaseStat = Math.min(100, base_stat);
                   return (
-                    <Grid.Col key={name}>
+                    <div
+                      style={{ flex: "0 0 45%", marginBottom: "20px" }}
+                      key={name}
+                    >
                       <Group
-                        position="center"
-                        align="center"
                         style={{ width: "100%" }}
+                        display={Flex}
+                        flexDirection="column"
                       >
-                        <Text style={{ color: "black", width: "100px" }}>
-                          {name}:
-                        </Text>
-                        <Text style={{ color: "black", width: "50px" }}>
-                          {base_stat}
-                        </Text>
+                        <Group
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "black",
+                              fontSize: "1.2em",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            {name}:
+                          </Text>
+                          <Text
+                            style={{
+                              color: "black",
+                              fontSize: "1.2em",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            {base_stat}
+                          </Text>
+                        </Group>
                         <LinearProgress
                           variant="determinate"
                           value={normalizedBaseStat}
                           style={{ width: "150px", height: "10px" }}
                         />
                       </Group>
-                    </Grid.Col>
+                    </div>
                   );
                 })}
-              </Grid>
+              </div>
 
               <Grid mt="md" gap={2}>
                 <Button
                   onClick={() => navigate("/")}
                   style={{
-                    backgroundColor: "#1a90ff",
+                    backgroundColor: mainTypeColor,
                     border: 0,
                     height: 42,
                     paddingLeft: 20,
                     paddingRight: 20,
-                    width: "100%",
+                    width: "30%",
+                    marginTop: "20px",
                   }}
                 >
                   Back to Home
