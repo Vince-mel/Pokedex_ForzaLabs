@@ -225,8 +225,8 @@ const Pokemon = () => {
                   <Image
                     src={fullImageUrl}
                     alt="pokemon"
-                    width={300}
-                    height={300}
+                    width={"60%"}
+                    height={"60%"}
                     mx="auto"
                     my="md"
                     style={{
