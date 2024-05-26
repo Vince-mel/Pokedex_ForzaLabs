@@ -1,21 +1,11 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-
+// vite.config.js
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      // Aggiungi qui i tuoi alias se necessario
-    },
-  },
+  // ...
   build: {
     rollupOptions: {
-      external: [
-        // Aggiungi qui i moduli da trattare come esterni se necessario
-      ],
+      external: ["@mantine/core"],
+      // ...
     },
   },
-  optimizeDeps: {
-    include: ["@mantine/core"],
-  },
+  // ...
 });
