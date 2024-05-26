@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FaGithub, FaRocket } from "react-icons/fa";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import FlightIcon from "@mui/icons-material/Flight";
 
 import {
   Text,
@@ -85,7 +86,7 @@ const Pokemon = () => {
           rel="noopener noreferrer"
           style={{ position: "absolute", top: 10, left: 10 }}
         >
-          <FaGithub size={60} color="white" />
+          <GitHubIcon style={{ fontSize: 60, color: "white" }} />
         </a>
 
         <a
@@ -102,7 +103,7 @@ const Pokemon = () => {
             textDecoration: "none",
           }}
         >
-          <FaRocket size={45} />
+          <FlightIcon style={{ fontSize: 45, color: "white" }} />
           <span style={{ marginLeft: 10 }}>Portfolio</span>
         </a>
 
