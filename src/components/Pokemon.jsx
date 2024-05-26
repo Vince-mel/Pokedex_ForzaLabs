@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import InsightsIcon from "@mui/icons-material/Insights";
+import InsightIcon from "@mui/icons-material/Flight";
 import {
   Text,
   Loader,
@@ -14,6 +14,7 @@ import {
   Grid,
   Flex,
   Box,
+  useMantineTheme,
 } from "@mantine/core";
 import LinearProgress from "@mui/material/LinearProgress";
 import { toFirstCharUppercase } from "./constants";
@@ -41,10 +42,12 @@ const typeColors = {
   ghost: "black",
   fairy: "pink",
 };
+
 const Pokemon = () => {
   const { pokemonId } = useParams();
   const navigate = useNavigate();
   const [pokemon, setPokemon] = useState(undefined);
+  const theme = useMantineTheme();
 
   useEffect(() => {
     axios
@@ -75,15 +78,22 @@ const Pokemon = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          minHeight: "100vh",
           padding: "20px",
+          position: "relative",
+          overflow: "hidden",
+          backgroundColor: "black",
         }}
       >
         <a
           href="https://github.com/Vince-mel/Pokedex_ForzaLabs"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ position: "absolute", top: 10, left: 10 }}
+          style={{
+            position: "absolute",
+            top: 10,
+            left: 10,
+          }}
         >
           <GitHubIcon style={{ fontSize: 60, color: "white" }} />
         </a>
@@ -102,22 +112,22 @@ const Pokemon = () => {
             textDecoration: "none",
           }}
         >
-          <InsightsIcon style={{ fontSize: 45, color: "white" }} />
+          <InsightIcon style={{ fontSize: 45, color: "white" }} />
           <span style={{ marginLeft: 10 }}>Portfolio</span>
         </a>
 
         <div
           style={{
-            width: "400px",
-            height: "200px",
-            backgroundColor: "#f0f0f0",
+            width: "60%",
+            height: "50%",
+
             borderRadius: "50px",
-            boxShadow: "0 2px 9px 1px rgba(0,0,0,0.2)",
+            boxShadow: "0 2px 9px 1px rgba(0, 0, 0, 0.2)",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            padding: "10px 20px",
+            padding: "20px",
           }}
         >
           <Box
@@ -155,7 +165,6 @@ const Pokemon = () => {
                   maxHeight: "50px",
                   marginBottom: "20px",
                 }}
-                display="block"
               />
               <img
                 src={Logo2}
@@ -164,7 +173,11 @@ const Pokemon = () => {
               />
             </div>
           </Box>
-          <Container style={{ width: "700px", height: "700px" }}>
+          <Container
+            style={{
+              width: "100%",
+            }}
+          >
             <Center
               style={{
                 flexDirection: "column",
@@ -173,31 +186,21 @@ const Pokemon = () => {
               }}
             >
               <Box
-                shadow="md"
-                padding="md"
                 style={{
                   margin: "auto",
-
                   backgroundColor: "#ffffff",
                   borderRadius: "10px",
                   borderColor: mainTypeColor,
                   borderWidth: "3px",
                   borderStyle: "solid",
+                  padding: "1em",
                 }}
               >
-                <Flex
-                  direction="column"
-                  justify="center"
-                  style={{ padding: "1em" }}
-                  textAlign="center"
-                >
+                <Flex direction="column" justify="center" align="center">
                   <Group
                     position="center"
                     align="center"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    margin="auto"
+                    style={{ margin: "auto" }}
                   >
                     <Text
                       size="xl"
@@ -226,7 +229,10 @@ const Pokemon = () => {
                     height={300}
                     mx="auto"
                     my="md"
-                    style={{ objectFit: "cover", objectPosition: "center" }}
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "center",
+                    }}
                   />
                   <div
                     style={{
@@ -253,7 +259,12 @@ const Pokemon = () => {
                         flexWrap: "wrap",
                       }}
                     >
-                      <div style={{ flex: "0 0 45%", marginBottom: "20px" }}>
+                      <div
+                        style={{
+                          flex: "0 0 45%",
+                          marginBottom: "20px",
+                        }}
+                      >
                         <Group position="center" spacing="xs">
                           <Text
                             style={{
@@ -279,7 +290,12 @@ const Pokemon = () => {
                           <Badge color="gray">{weight}</Badge>
                         </Group>
                       </div>
-                      <div style={{ flex: "0 0 45%", marginBottom: "20px" }}>
+                      <div
+                        style={{
+                          flex: "0 0 45%",
+                          marginBottom: "20px",
+                        }}
+                      >
                         <Text
                           size="md"
                           weight={700}
@@ -341,13 +357,17 @@ const Pokemon = () => {
                       const normalizedBaseStat = Math.min(100, base_stat);
                       return (
                         <div
-                          style={{ flex: "0 0 45%", marginBottom: "20px" }}
+                          style={{
+                            flex: "0 0 45%",
+                            marginBottom: "20px",
+                          }}
                           key={name}
                         >
                           <Group
-                            style={{ width: "100%" }}
-                            display={Flex}
-                            flexDirection="column"
+                            style={{
+                              width: "100%",
+                              flexDirection: "column",
+                            }}
                           >
                             <Group
                               style={{
@@ -378,7 +398,10 @@ const Pokemon = () => {
                             <LinearProgress
                               variant="determinate"
                               value={normalizedBaseStat}
-                              style={{ width: "150px", height: "10px" }}
+                              style={{
+                                width: "150px",
+                                height: "10px",
+                              }}
                             />
                           </Group>
                         </div>
@@ -395,8 +418,10 @@ const Pokemon = () => {
                         height: 42,
                         paddingLeft: 20,
                         paddingRight: 20,
-                        width: "30%",
+                        width: "100%",
+                        maxWidth: "200px",
                         marginTop: "20px",
+                        alignSelf: "center",
                       }}
                     >
                       Back to Home
