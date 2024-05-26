@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { FaGithub, FaRocket } from "react-icons/fa";
+
 import {
   Text,
   Loader,
@@ -13,13 +15,13 @@ import {
   Flex,
   Box,
 } from "@mantine/core";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import LinearProgress from "@mui/material/LinearProgress";
 import { toFirstCharUppercase } from "./constants";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
-import Logo from "../assets/img/Logo2.png";
-import Logo2 from "../assets/img/logo.png";
+import Logo from "../assets /img/Logo2.png";
+import Logo2 from "../assets /img/logo.png";
 
 const typeColors = {
   fire: "red",
@@ -28,12 +30,17 @@ const typeColors = {
   poison: "green",
   water: "blue",
   bug: "green",
-  normal: "grey",
+  normal: "silver",
   flying: "orange",
   rock: "brown",
   ground: "brown",
+  dragon: "gold",
+  psychic: "purple",
+  ice: "blue",
+  fighting: "red",
+  ghost: "black",
+  fairy: "pink",
 };
-
 const Pokemon = () => {
   const { pokemonId } = useParams();
   const navigate = useNavigate();
@@ -72,6 +79,33 @@ const Pokemon = () => {
           padding: "20px",
         }}
       >
+        <a
+          href="https://github.com/Vince-mel/Pokedex_ForzaLabs"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ position: "absolute", top: 10, left: 10 }}
+        >
+          <FaGithub size={60} color="white" />
+        </a>
+
+        <a
+          href="https://vince-mel-portfolio.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            display: "flex",
+            alignItems: "center",
+            color: "white",
+            textDecoration: "none",
+          }}
+        >
+          <FaRocket size={45} />
+          <span style={{ marginLeft: 10 }}>Portfolio</span>
+        </a>
+
         <div
           style={{
             width: "600px",
