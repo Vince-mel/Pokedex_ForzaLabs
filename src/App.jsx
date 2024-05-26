@@ -1,3 +1,5 @@
+import React from "react";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Pokedex from "./components/Pokedex";
 import Pokemon from "./components/Pokemon";
