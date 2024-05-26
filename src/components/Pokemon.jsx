@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import InsightIcon from "@mui/icons-material/Flight";
+import InsightIcon from "@mui/icons-material/Insights";
 import {
   Text,
   Loader,
