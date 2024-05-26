@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import FlightIcon from "@mui/icons-material/Flight";
-
+import InsightsIcon from "@mui/icons-material/Insights";
 import {
   Paper,
   Text,
@@ -116,7 +115,7 @@ const Pokedex = () => {
           textDecoration: "none",
         }}
       >
-        <FlightIcon style={{ fontSize: 45, color: "white" }} />
+        <InsightsIcon style={{ fontSize: 45, color: "white" }} />
         <span style={{ marginLeft: 10 }}>Portfolio</span>
       </a>
 
